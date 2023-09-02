@@ -1,0 +1,29 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\nINSERT INTO domain_link (parent_domain, child_domain)\nVALUES                  ($1,             $2           )\nRETURNING parent_domain, child_domain\n        ",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "parent_domain",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "child_domain",
+        "type_info": "Uuid"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false
+    ]
+  },
+  "hash": "135bf3e454eec32c92da28dfa192c63e60682b897062ec784d433d183471a609"
+}
