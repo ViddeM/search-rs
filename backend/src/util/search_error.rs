@@ -4,6 +4,8 @@ pub enum SearchError {
     SqlxError(#[from] sqlx::Error),
     #[error("Rocket error")]
     RocketError(#[from] rocket::Error),
+    #[error("URL parse error")]
+    URLError(#[from] url::ParseError),
 }
 
 pub type SearchResult<T> = Result<T, SearchError>;

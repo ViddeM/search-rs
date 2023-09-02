@@ -2330,6 +2330,8 @@ dependencies = [
  "spider",
  "sqlx",
  "thiserror",
+ "tokio",
+ "url",
  "uuid",
 ]
 

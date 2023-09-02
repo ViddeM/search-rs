@@ -1,5 +1,5 @@
-DROP TABLE website_link;
+DROP TABLE domain_link;
 
-DROP TABLE indexed_website;
+DROP TABLE website_page;
 
-DROP TABLE website_to_index;
+DROP TABLE domain;

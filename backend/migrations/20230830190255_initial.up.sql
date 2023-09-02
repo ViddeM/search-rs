@@ -1,25 +1,36 @@
-CREATE TABLE indexed_website(
-    id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-    title TEXT,
-    domain TEXT NOT NULL,
-    indexed_at TIMESTAMPTZ NOT NULL DEFAULT now(),
-
-    UNIQUE (domain)
+CREATE TABLE DOMAIN (
+    id          UUID NOT NULL DEFAULT gen_random_uuid(),
+    domain      TEXT NOT NULL,
+    indexed_at  TIMESTAMPTZ,
+    added_at    TIMESTAMPTZ NOT NULL DEFAULT now(),
+    
+    PRIMARY KEY (id),
+    
+    UNIQUE (DOMAIN)
 );
 
-CREATE INDEX ON indexed_website (lower(title)); 
+CREATE TABLE website_page(
+    id          UUID NOT NULL DEFAULT gen_random_uuid(),
+    domain      UUID NOT NULL,
+    title       TEXT,
+    page_url    TEXT NOT NULL,
+    indexed_at  TIMESTAMPTZ NOT NULL DEFAULT now(),
 
-CREATE TABLE website_link(
-    parent_website UUID NOT NULL,
-    child_website UUID NOT NULL,
+    PRIMARY KEY (id),
 
-    PRIMARY KEY (parent_website, child_website),
+    FOREIGN KEY (DOMAIN) REFERENCES DOMAIN (id),
 
-    FOREIGN KEY (parent_website) REFERENCES indexed_website(id),
-    FOREIGN KEY (child_website) REFERENCES indexed_website(id)
+    UNIQUE (page_url)
 );
 
-CREATE TABLE website_to_index(
-    domain TEXT PRIMARY KEY,
-    added_at TIMESTAMPTZ NOT NULL DEFAULT now()
+CREATE INDEX ON website_page(LOWER(title));
+
+CREATE TABLE domain_link(
+    parent_domain   UUID NOT NULL,
+    child_domain    UUID NOT NULL,
+
+    PRIMARY KEY (parent_domain, child_domain),
+
+    FOREIGN KEY (parent_domain) REFERENCES DOMAIN (id),
+    FOREIGN KEY (child_domain) REFERENCES DOMAIN (id)
 );
